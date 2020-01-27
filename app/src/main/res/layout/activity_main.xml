@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+	<data>
+		<import type="com.formationandroid.databinding.MainPresenter"/>
+		<variable
+			name="presenter"
+			type="com.formationandroid.databinding.MainPresenter"/>
+	</data>
+
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:context=".MainActivity">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingTop="@dimen/main_padding_page"
+			android:paddingBottom="@dimen/main_padding_page">
+
+			<TextView
+				android:id="@+id/resultat"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/main_marge_resultat"
+				android:text="@{presenter.getResultatFormate()}"
+				android:textColor="@android:color/holo_red_dark"
+				android:textSize="@dimen/main_taille_resultat"
+				app:layout_constraintLeft_toLeftOf="parent"
+				app:layout_constraintRight_toRightOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="12345" />
+
+			<EditText
+				android:id="@+id/nombre1"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/main_marge_saisie"
+				android:hint="@string/main_hint_nombre"
+				android:inputType="number"
+				android:maxLength="@integer/main_nombre_max_saisie"
+				android:maxLines="1"
+				android:padding="@dimen/main_padding_saisie"
+				app:layout_constraintLeft_toLeftOf="parent"
+				app:layout_constraintRight_toRightOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/resultat" />
+
+			<EditText
+				android:id="@+id/nombre2"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/main_marge_saisie"
+				android:hint="@string/main_hint_nombre"
+				android:inputType="number"
+				android:maxLength="@integer/main_nombre_max_saisie"
+				android:maxLines="1"
+				android:padding="@dimen/main_padding_saisie"
+				app:layout_constraintLeft_toLeftOf="parent"
+				app:layout_constraintRight_toRightOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/nombre1" />
+
+			<Button
+				android:id="@+id/addition"
+				style="@style/BoutonOperation"
+				android:onClick="@{(operation) -> presenter.setOperation(MainPresenter.Operation.ADDITION)}"
+				android:text="@string/main_libelle_addition"
+				app:layout_constraintHorizontal_chainStyle="packed"
+				app:layout_constraintLeft_toLeftOf="parent"
+				app:layout_constraintRight_toLeftOf="@id/soustraction"
+				app:layout_constraintTop_toBottomOf="@id/nombre2" />
+
+			<Button
+				android:id="@+id/soustraction"
+				style="@style/BoutonOperation"
+				android:onClick="@{(operation) -> presenter.setOperation(MainPresenter.Operation.SOUSTRACTION)}"
+				android:text="@string/main_libelle_soustraction"
+				app:layout_constraintLeft_toRightOf="@id/addition"
+				app:layout_constraintRight_toRightOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/nombre2" />
+
+			<Button
+				android:id="@+id/multiplication"
+				style="@style/BoutonOperation"
+				android:onClick="@{(operation) -> presenter.setOperation(MainPresenter.Operation.MULTIPLICATION)}"
+				android:text="@string/main_libelle_multiplication"
+				app:layout_constraintHorizontal_chainStyle="packed"
+				app:layout_constraintLeft_toLeftOf="parent"
+				app:layout_constraintRight_toLeftOf="@id/division"
+				app:layout_constraintTop_toBottomOf="@id/addition" />
+
+			<Button
+				android:id="@+id/division"
+				style="@style/BoutonOperation"
+				android:onClick="@{(operation) -> presenter.setOperation(MainPresenter.Operation.DIVISION)}"
+				android:text="@string/main_libelle_division"
+				app:layout_constraintLeft_toRightOf="@id/multiplication"
+				app:layout_constraintRight_toRightOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/addition" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</ScrollView>
+
+</layout>

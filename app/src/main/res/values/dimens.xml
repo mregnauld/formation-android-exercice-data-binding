@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Main -->
+	<dimen name="main_taille_resultat">32sp</dimen>
+	<dimen name="main_marge_resultat">24dp</dimen>
+	<dimen name="main_padding_saisie">16dp</dimen>
+	<dimen name="main_marge_saisie">16dp</dimen>
+	<dimen name="main_cote_bouton_operation">80dp</dimen>
+	<dimen name="main_taille_texte_bouton_operation">40sp</dimen>
+	<dimen name="main_marge_bouton">8dp</dimen>
+	<dimen name="main_padding_page">16dp</dimen>
+
+</resources>

@@ -1,0 +1,13 @@
+<resources>
+
+	<!-- Commun -->
+	<string name="app_name">Data Binding</string>
+
+	<!-- Main -->
+	<string name="main_hint_nombre">Saisir un nombre</string>
+	<string name="main_libelle_addition">+</string>
+	<string name="main_libelle_soustraction">-</string>
+	<string name="main_libelle_multiplication">×</string>
+	<string name="main_libelle_division">÷</string>
+
+</resources>
