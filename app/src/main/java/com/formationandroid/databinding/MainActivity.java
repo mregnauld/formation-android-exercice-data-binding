@@ -1,24 +1,30 @@
 package com.formationandroid.databinding;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
-import com.formationandroid.databinding.databinding.ActivityMainBinding;
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity implements TextWatcher
+public class MainActivity extends AppCompatActivity
 {
 	
 	// Vues :
-	private EditText editText1 = null;
-	private EditText editText2 = null;
+	private RecyclerView recyclerView = null;
+	private EditText editTextMemo = null;
+	private FrameLayout frameLayoutConteneurDetail = null;
 	
-	// Opération :
-	private MainPresenter mainPresenter = null;
+	// Adapter :
+	private MemosAdapter memosAdapter = null;
 	
 	
 	@Override
@@ -26,38 +32,76 @@ public class MainActivity extends AppCompatActivity implements TextWatcher
 	{
 		// init :
 		super.onCreate(savedInstanceState);
-		ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-		
-		// binding :
-		mainPresenter = new MainPresenter();
-		activityMainBinding.setPresenter(mainPresenter);
+		setContentView(R.layout.activity_main);
 		
 		// vues :
-		editText1 = findViewById(R.id.nombre1);
-		editText2 = findViewById(R.id.nombre2);
+		recyclerView = findViewById(R.id.liste_memos);
+		editTextMemo = findViewById(R.id.saisie_memo);
+		frameLayoutConteneurDetail = findViewById(R.id.conteneur_detail);
 		
-		// ajout listeners :
-		editText1.addTextChangedListener(this);
-		editText2.addTextChangedListener(this);
+		// à ajouter pour de meilleures performances :
+		recyclerView.setHasFixedSize(true);
+		
+		// layout manager, décrivant comment les items sont disposés :
+		LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+		recyclerView.setLayoutManager(layoutManager);
+		
+		// contenu d'exemple :
+		List<Memo> listeMemos = new ArrayList<>();
+		for (int a = 0 ; a < 20 ; a++)
+		{
+			listeMemos.add(new Memo("Mémo n°" + (a + 1)));
+		}
+		
+		// adapter :
+		memosAdapter = new MemosAdapter(this, listeMemos);
+		recyclerView.setAdapter(memosAdapter);
 	}
 	
-	@Override
-	public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-	
-	@Override
-	public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-	
-	@Override
-	public void afterTextChanged(Editable editable)
+	/**
+	 * Appelé lors du clic sur un item de la liste, depuis l'adapter.
+	 * @param position Position dans la liste d'objets métier (position à partir de zéro !)
+	 */
+	public void onClicItem(int position)
 	{
-		if (editText1.isFocused() && editText1.getText().toString().length() > 0)
+		// récupération du mémo à cette position :
+		Memo memo = memosAdapter.getItemParPosition(position);
+		
+		// affichage du détail :
+		if (frameLayoutConteneurDetail != null)
 		{
-			mainPresenter.setNombre1(Long.parseLong(editText1.getText().toString()));
+			// fragment :
+			DetailFragment fragment = new DetailFragment();
+			Bundle bundle = new Bundle();
+			bundle.putParcelable(DetailFragment.EXTRA_MEMO, Parcels.wrap(memo));
+			fragment.setArguments(bundle);
+			
+			// le conteneur de la partie détail est disponible, on est donc en mode "tablette" :
+			getSupportFragmentManager().beginTransaction().replace(R.id.conteneur_detail, fragment).commit();
 		}
-		else if (editText2.isFocused() && editText2.getText().toString().length() > 0)
+		else
 		{
-			mainPresenter.setNombre2(Long.parseLong(editText2.getText().toString()));
+			// le conteneur de la partie détail n'est pas disponible, on est donc en mode "smartphone" :
+			Intent intent = new Intent(this, DetailActivity.class);
+			intent.putExtra(DetailActivity.EXTRA_MEMO, Parcels.wrap(memo));
+			startActivity(intent);
 		}
+	}
+	
+	/**
+	 * Listener clic bouton valider.
+	 * @param view Bouton valider
+	 */
+	public void onClickBoutonValider(View view)
+	{
+		// ajout du mémo :
+		memosAdapter.ajouterMemo(new Memo(editTextMemo.getText().toString()));
+		
+		// animation de repositionnement de la liste (sinon on ne voit pas l'item ajouté) :
+		recyclerView.smoothScrollToPosition(0);
+		
+		// on efface le contenu de la zone de saisie :
+		editTextMemo.setText("");
 	}
 	
 }

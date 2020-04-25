@@ -8,13 +8,4 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
-	<style name="BoutonOperation">
-		<item name="android:layout_width">@dimen/main_cote_bouton_operation</item>
-		<item name="android:layout_height">@dimen/main_cote_bouton_operation</item>
-		<item name="android:background">@color/colorAccent</item>
-		<item name="android:textColor">@android:color/white</item>
-		<item name="android:textSize">@dimen/main_taille_texte_bouton_operation</item>
-		<item name="android:layout_margin">@dimen/main_marge_bouton</item>
-	</style>
-
 </resources>

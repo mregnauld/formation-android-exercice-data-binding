@@ -2,13 +2,14 @@
 <resources>
 
 	<!-- Main -->
-	<dimen name="main_taille_resultat">32sp</dimen>
-	<dimen name="main_marge_resultat">24dp</dimen>
-	<dimen name="main_padding_saisie">16dp</dimen>
-	<dimen name="main_marge_saisie">16dp</dimen>
-	<dimen name="main_cote_bouton_operation">80dp</dimen>
-	<dimen name="main_taille_texte_bouton_operation">40sp</dimen>
-	<dimen name="main_marge_bouton">8dp</dimen>
-	<dimen name="main_padding_page">16dp</dimen>
+	<dimen name="main_hauteur_saisie_memo">64dp</dimen>
+	<dimen name="main_hauteur_memo">64dp</dimen>
+	<dimen name="main_taille_intitule_memo">18sp</dimen>
+	<dimen name="main_marge_memo">8dp</dimen>
+	<dimen name="main_largeur_max">300dp</dimen>
+
+	<!-- Détail -->
+	<dimen name="detail_taille_memo">18sp</dimen>
+	<dimen name="detail_padding_memo">8dp</dimen>
 
 </resources>
